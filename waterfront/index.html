@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TheWaterfront · демо-концепт</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--w:#fff;--paper:#f4f5f6;--ink:#1c1e21;--ink-2:#5f6670;--slate:#5d6b77;--yel:#ffd353;--line:#e2e4e7}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--w);color:var(--ink);font-family:Onest,system-ui,sans-serif;font-size:16px;line-height:1.55;overflow-x:clip;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-weight:700;letter-spacing:-.04em;line-height:.95}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+button{font-family:inherit;color:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+.lab{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--slate)}
+
+.wm{position:fixed;inset:-50%;z-index:9998;pointer-events:none;transform:rotate(-24deg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='440' height='170'%3E%3Ctext x='0' y='95' font-family='Arial' font-size='22' font-weight='700' fill='%231c1e21' fill-opacity='0.08'%3E%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%9D%D0%95%20%D0%9E%D0%A4%D0%98%D0%A6%D0%98%D0%90%D0%9B%D0%AC%D0%9D%D0%AB%D0%99%20%D0%A1%D0%90%D0%99%D0%A2%3C/text%3E%3C/svg%3E");}
+.demo-bar{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--ink);color:#fff;font-size:12px;text-align:center;padding:7px 16px}
+.demo-bar b{color:var(--yel)}
+
+/* шапка */
+.top{position:fixed;top:0;left:0;right:0;z-index:60;transition:background .35s,color .35s,border-color .35s;color:#fff;border-bottom:1px solid rgba(255,255,255,.25)}
+.top.solid{background:#fff;color:var(--ink);border-color:var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:70px;gap:20px}
+.word{font-size:22px;font-weight:800;letter-spacing:-.04em}
+.word span{font-weight:300}
+.top nav{display:flex;gap:28px;font-weight:500}
+.top nav a{position:relative;padding:6px 0}
+.top nav a::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--yel);transition:width .3s}
+.top nav a:hover::after{width:100%}
+.call{display:flex;align-items:center;gap:10px;font-weight:600}
+.call a.ph{background:var(--yel);color:var(--ink);padding:11px 18px;font-weight:700}
+.call a.ph:hover{background:#fff}
+.top.solid .call a.ph:hover{background:var(--ink);color:#fff}
+
+/* hero */
+.hero{position:relative;height:100vh;min-height:640px;color:#fff;overflow:hidden;background:#cfd3d6}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.08);animation:zo 2.2s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes zo{to{transform:none}}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(15,17,20,.78),rgba(15,17,20,.15) 55%,rgba(15,17,20,.35))}
+.hero-in{position:absolute;z-index:2;left:0;right:0;bottom:0}
+.hero-in .wrap{padding-bottom:70px;display:grid;grid-template-columns:1.4fr 1fr;gap:40px;align-items:end}
+.hero h1{font-size:clamp(58px,10.5vw,170px);letter-spacing:-.06em}
+.hero h1 span{display:block;overflow:hidden}
+.hero h1 span i{display:inline-block;font-style:normal;transform:translateY(105%);animation:up 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 span:nth-child(2) i{animation-delay:.1s;font-weight:300}
+@keyframes up{to{transform:none}}
+.hero .sub{font-size:18px;margin-top:16px;opacity:.9}
+.panel{background:#fff;color:var(--ink);padding:26px;display:grid;gap:16px;animation:fade 1s .4s both}
+@keyframes fade{from{opacity:0;transform:translateY(20px)}}
+.st{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.st b{font-size:20px}
+.st span{font-size:14px;color:var(--ink-2)}
+.st i{font-style:normal;font-size:13px;font-weight:700;background:var(--yel);padding:4px 10px}
+.st.closed i{background:var(--paper)}
+.rate{display:flex;align-items:center;gap:12px}
+.rate b{font-size:40px;letter-spacing:-.04em;line-height:1}
+.rate small{color:var(--ink-2);font-size:14px;line-height:1.3}
+.stars{color:#e8b100;letter-spacing:2px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.b{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 12px;font-weight:700;font-size:15px;border:1px solid var(--ink);transition:background .2s,color .2s;cursor:pointer;background:none}
+.b:hover{background:var(--ink);color:#fff}
+.b.y{background:var(--yel);border-color:var(--yel);color:var(--ink)}
+.b.y:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+.b svg{width:18px;height:18px}
+.b.full{grid-column:1/-1}
+
+/* полоса */
+.info{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line)}
+.info div{padding:26px 28px;border-right:1px solid var(--line)}
+.info div:last-child{border-right:0}
+.info b{display:block;font-size:20px;margin-top:6px;letter-spacing:-.02em}
+.info a{border-bottom:2px solid var(--yel)}
+
+section{padding:110px 0}
+.h{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:40px;flex-wrap:wrap}
+.h h2{font-size:clamp(48px,7vw,104px)}
+.h p{color:var(--ink-2);max-width:420px}
+
+/* меню */
+.menu{display:grid;grid-template-columns:260px 1fr;gap:50px;align-items:start}
+.cats{position:sticky;top:96px;display:grid;border-top:1px solid var(--ink)}
+.cats button{display:flex;justify-content:space-between;align-items:center;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:14px 4px;font-size:17px;font-weight:500;cursor:pointer;transition:padding .25s,background .25s}
+.cats button small{color:var(--ink-2);font-size:13px}
+.cats button:hover{padding-left:12px}
+.cats button.on{background:var(--yel);padding-left:14px;font-weight:700}
+.list{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}
+.row{display:grid;grid-template-columns:96px 1fr auto;gap:18px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer;animation:fade .45s both}
+.row .im{width:96px;height:72px;background:var(--paper);overflow:hidden}
+.row .im img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.row:hover .im img{transform:scale(1.08)}
+.row h4{font-size:16px;font-weight:600;line-height:1.3}
+.row p{font-size:13px;color:var(--ink-2);margin-top:3px}
+.row b{font-size:18px;white-space:nowrap}
+.row.noimg .im{display:grid;place-items:center;color:var(--slate);font-size:12px;text-align:center}
+.addons{display:flex;flex-wrap:wrap;gap:8px}
+.addons span{border:1px solid var(--line);padding:10px 14px;font-weight:500}
+.addons span b{margin-left:8px}
+.deliv{margin-top:34px;background:var(--paper);padding:26px 28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.deliv b{font-size:22px;letter-spacing:-.02em}
+
+/* фото */
+.strip{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:280px 280px;gap:8px}
+.strip button,.more-ph button{border:0;padding:0;background:var(--paper);overflow:hidden;cursor:zoom-in}
+.strip button:first-child{grid-row:span 2}
+.strip img,.more-ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.strip button:hover img,.more-ph button:hover img{transform:scale(1.05)}
+.more-ph{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:8px}
+.more-ph button{aspect-ratio:1}
+.mbtn{margin-top:20px;display:flex;justify-content:center}
+
+/* отзывы */
+.rev{background:var(--paper)}
+.rev-head{display:flex;align-items:flex-end;gap:30px;flex-wrap:wrap}
+.rev-head .big{font-size:clamp(90px,12vw,180px);font-weight:700;letter-spacing:-.07em;line-height:.8}
+.cols{columns:3 300px;column-gap:16px}
+.rc{break-inside:avoid;background:#fff;padding:24px;margin-bottom:16px}
+.rc .who{display:flex;justify-content:space-between;gap:10px;margin-bottom:10px}
+.rc .who b{font-size:16px}
+.rc .who small{color:var(--ink-2);font-size:13px;white-space:nowrap}
+.rc p{color:#3c4148;white-space:pre-line;font-size:15px}
+.rc .stars{font-size:13px;margin-bottom:8px}
+
+/* контакты */
+.cg{display:grid;grid-template-columns:1.1fr 1fr;gap:0;border:1px solid var(--ink)}
+.cg>div{padding:36px}
+.cg>div:first-child{border-right:1px solid var(--ink)}
+.cg h3{font-size:44px;margin-bottom:22px}
+.cl{display:grid;gap:4px}
+.cl a,.cl div{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-weight:500}
+.cl a:hover{color:var(--slate)}
+.cl small{color:var(--ink-2);font-weight:400}
+.sched div{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--line)}
+.sched div.on{background:var(--yel);padding:12px 12px;font-weight:700;border-color:var(--yel)}
+
+/* окна */
+.mod{position:fixed;inset:0;z-index:90;background:rgba(15,17,20,.6);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.mod.open{opacity:1;pointer-events:auto}
+.mbox{background:#fff;max-width:720px;width:100%;display:grid;grid-template-columns:1.1fr 1fr;transform:translateY(16px);transition:transform .4s;position:relative}
+.mod.open .mbox{transform:none}
+.mbox .im{background:var(--paper);min-height:320px}
+.mbox .im img{width:100%;height:100%;object-fit:cover}
+.mbox .t{padding:30px;display:flex;flex-direction:column;gap:10px}
+.mbox h3{font-size:34px}
+.mbox .pr{font-size:26px;font-weight:700}
+.mbox p{color:var(--ink-2)}
+.x{position:absolute;top:0;right:0;width:48px;height:48px;border:0;background:var(--ink);color:#fff;font-size:16px;cursor:pointer;z-index:2}
+.lb{position:fixed;inset:0;z-index:95;background:rgba(10,11,13,.95);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.lb.open{opacity:1;pointer-events:auto}
+.lb img{max-width:92vw;max-height:84vh}
+.lb button{position:absolute;width:54px;height:54px;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:20px;cursor:pointer}
+.lb .p{left:16px}.lb .n{right:16px}.lb .xx{top:16px;right:16px}
+.lb span{position:absolute;bottom:50px;color:#fff}
+
+.fab{display:none}
+footer{border-top:1px solid var(--line);padding:30px 0 80px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--ink-2);font-size:14px;align-items:center}
+footer .word{color:var(--ink)}
+
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s,transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.show{opacity:1;transform:none}
+
+@media (max-width:1000px){
+  .top nav{display:none}
+  .hero-in .wrap{grid-template-columns:1fr;gap:20px;padding-bottom:56px}
+  .info{grid-template-columns:1fr 1fr}.info div:nth-child(2){border-right:0}.info div:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .menu{grid-template-columns:1fr}
+  .cats{position:sticky;top:70px;z-index:10;background:#fff;display:flex;overflow-x:auto;border-top:0;border-bottom:1px solid var(--ink);scrollbar-width:none}
+  .cats::-webkit-scrollbar{display:none}
+  .cats button{flex:none;border-bottom:0;padding:14px 14px;gap:6px}
+  .cats button:hover{padding-left:14px}
+  .list{grid-template-columns:1fr}
+  .cg{grid-template-columns:1fr}.cg>div:first-child{border-right:0;border-bottom:1px solid var(--ink)}
+  .more-ph{grid-template-columns:repeat(3,1fr)}
+  section{padding:80px 0}
+}
+@media (max-width:620px){
+  .wrap{padding:0 16px}
+  .call span{display:none}
+  .call .mob-ic{display:block!important}
+  .hero{min-height:720px}
+  .hero h1{font-size:15vw}
+  .panel{padding:18px}
+  .info div{padding:18px 16px}.info b{font-size:16px}
+  .strip{grid-template-columns:1fr 1fr;grid-template-rows:200px 140px 140px}
+  .strip button:first-child{grid-column:span 2;grid-row:auto}
+  .row{grid-template-columns:76px 1fr auto;gap:12px}.row .im{width:76px;height:60px}
+  .cg>div{padding:24px 18px}
+  .fab{display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .3s;position:fixed;right:16px;bottom:44px;z-index:80;width:60px;height:60px;border-radius:50%;background:var(--yel);box-shadow:0 10px 24px -8px rgba(0,0,0,.45)}
+  .fab svg{width:24px;height:24px}
+  .mbox{grid-template-columns:1fr}.mbox .im{min-height:220px;max-height:240px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.hero h1 span i{transform:none}}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-ph" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12z M12 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/></symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24"><path fill="currentColor" d="M21.4 4.3 2.9 11.4c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.7 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.8-1.4-1.5zM8.6 13.9l9.6-6c.5-.3.9-.1.5.2l-8 7.3-.3 3.4z"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M6 7h12l1 14H5L6 7zM9 7a3 3 0 0 1 6 0"/></symbol>
+</svg>
+
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="word" href="#">The<span>Waterfront</span></a>
+    <nav><a href="#menu">Меню</a><a href="#photos">Фото</a><a href="#reviews">Отзывы</a><a href="#contacts">Контакты</a></nav>
+    <div class="call"><a class="ph" href="tel:+79099564266"><span>+7 909 956 42 66</span><svg width="18" height="18" style="display:none" class="mob-ic"><use href="#i-ph"/></svg></a></div>
+  </div>
+</header>
+
+<header class="hero">
+  <img src="https://avatars.mds.yandex.net/get-altay/6314780/2a00000188f5304966b738406b246d0e2f1a/XXL" alt="TheWaterfront">
+  <div class="hero-in">
+    <div class="wrap">
+      <div>
+        <span class="lab" style="color:#fff;opacity:.85">Кафе · Кофе с собой · Кофейня</span>
+        <h1 style="margin-top:14px"><span><i>The</i></span><span><i>Waterfront</i></span></h1>
+        <p class="sub">Москва, улица Большая Полянка, 51А/9</p>
+      </div>
+      <div class="panel">
+        <div class="st" id="st"><div><b id="stT">Часы работы</b><br><span id="stS"></span></div><i id="stI"></i></div>
+        <div class="rate"><b>4.6</b><div><div class="stars">★★★★★</div><small>538 отзывов на Яндекс Картах</small></div></div>
+        <div class="btns">
+          <a class="b y full" href="tel:+79099564266"><svg><use href="#i-ph"/></svg>Позвонить</a>
+          <a class="b" href="https://yandex.ru/maps?mode=routes&rtext=~55.73197%2C37.62069&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D218731355641&z=16" target="_blank" rel="noopener"><svg><use href="#i-route"/></svg>Как доехать</a>
+          <a class="b" href="https://thewaterfront.ru/delivery/" target="_blank" rel="noopener"><svg><use href="#i-bag"/></svg>Доставка</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="info">
+  <div><span class="lab">Сегодня</span><b id="today">—</b></div>
+  <div><span class="lab">Адрес</span><b>Большая Полянка, 51А/9</b></div>
+  <div><span class="lab">Мессенджеры</span><b><a href="https://telegram.me/waterfrontmoscow" target="_blank" rel="noopener">Telegram</a> · <a href="https://wa.me/79099564266" target="_blank" rel="noopener">WhatsApp</a></b></div>
+  <div><span class="lab">Соцсети</span><b><a href="https://vk.ru/thewaterfront" target="_blank" rel="noopener">ВКонтакте</a></b></div>
+</div>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="h"><h2 class="rv">Меню</h2><p class="rv">Нажмите на блюдо, чтобы рассмотреть его поближе.</p></div>
+    <div class="menu">
+      <div class="cats" id="cats"></div>
+      <div><div class="list" id="list"></div>
+        <div class="deliv rv"><div><span class="lab">Доставка</span><br><b>thewaterfront.ru/delivery</b></div><a class="b y" href="https://thewaterfront.ru/delivery/" target="_blank" rel="noopener"><svg><use href="#i-bag"/></svg>Заказать доставку</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="photos" style="padding-top:0">
+  <div class="wrap">
+    <div class="h"><h2 class="rv">Фото</h2><p class="rv" id="phc"></p></div>
+    <div class="strip" id="strip"></div>
+    <div class="more-ph" id="more"></div>
+    <div class="mbtn"><button class="b" id="moreBtn" style="padding:14px 28px">Показать ещё</button></div>
+  </div>
+</section>
+
+<section id="reviews" class="rev">
+  <div class="wrap">
+    <div class="h"><div class="rev-head"><span class="big">4.6</span><div><div class="stars" style="font-size:20px">★★★★★</div><h2 style="font-size:clamp(34px,4vw,54px)">538 отзывов</h2></div></div>
+      <a class="b" href="https://yandex.ru/maps/org/218731355641" target="_blank" rel="noopener" style="padding:14px 22px">Все отзывы на Яндекс Картах ↗</a></div>
+    <div class="cols" id="revs"></div>
+  </div>
+</section>
+
+<section id="contacts">
+  <div class="wrap">
+    <div class="h"><h2 class="rv">Контакты</h2></div>
+    <div class="cg rv">
+      <div>
+        <h3>TheWaterfront</h3>
+        <div class="cl">
+          <div><small>Адрес</small><span>Москва, улица Большая Полянка, 51А/9</span></div>
+          <a href="tel:+79099564266"><small>Телефон</small><span>+7 909 956 42 66</span></a>
+          <a href="https://telegram.me/waterfrontmoscow" target="_blank" rel="noopener"><small>Telegram</small><span>@waterfrontmoscow ↗</span></a>
+          <a href="https://wa.me/79099564266" target="_blank" rel="noopener"><small>WhatsApp</small><span>+7 909 956 42 66 ↗</span></a>
+          <a href="https://vk.ru/thewaterfront" target="_blank" rel="noopener"><small>ВКонтакте</small><span>vk.ru/thewaterfront ↗</span></a>
+        </div>
+        <div class="btns" style="margin-top:22px"><a class="b y" href="https://yandex.ru/maps?mode=routes&rtext=~55.73197%2C37.62069&ruri=~ymapsbm1%3A%2F%2Forg%3Foid%3D218731355641&z=16" target="_blank" rel="noopener"><svg><use href="#i-route"/></svg>Как доехать</a><a class="b" href="tel:+79099564266"><svg><use href="#i-ph"/></svg>Позвонить</a></div>
+      </div>
+      <div><h3>Часы работы</h3><div class="sched" id="sched"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="demoEnd" style="padding:70px 16px 60px;text-align:center;color:inherit;border-top:1px solid currentColor;border-color:rgba(127,127,127,.3);margin:0;overflow:hidden"><div style="font-size:clamp(40px,12.4vw,200px);font-weight:800;line-height:.9;letter-spacing:-.03em;opacity:.92;white-space:nowrap">ДЕМОВЕРСИЯ</div><p style="margin:18px auto 0;max-width:640px;font-size:15px;opacity:.65;line-height:1.5">Это концепт нового сайта, не официальный сайт кафе TheWaterfront. Тексты, меню и фото взяты с их открытых страниц и показаны для ознакомления.</p></section>
+<footer><div class="wrap"><span class="word">The<span>Waterfront</span></span><span>Демо-концепт · не официальный сайт · меню, фото и отзывы: страница кафе на Яндекс Бизнесе</span></div></footer>
+<a class="fab" href="tel:+79099564266" aria-label="Позвонить"><svg><use href="#i-ph"/></svg></a>
+
+<div class="mod" id="mod"><div class="mbox"><button class="x" data-x aria-label="Закрыть">✕</button><div class="im" id="mIm"></div><div class="t"><span class="lab" id="mCat"></span><h3 id="mName"></h3><div class="pr" id="mPr"></div><p id="mDesc"></p></div></div></div>
+<div class="lb" id="lb"><img id="lbImg" alt=""><button class="p" aria-label="Назад">←</button><button class="n" aria-label="Вперёд">→</button><button class="xx" aria-label="Закрыть">✕</button><span id="lbC"></span></div>
+
+<script>
+const MENU=[["Завтраки с яйцами", [["Бенедикт с голландским соусом", "680", "17780111/bf73168f0d1b4ad7be918bf099ed8e01", ""], ["Шакшука с йогуртом и горячим тостом", "700", "18014981/492e1d8ea97a4e3eb2ee4e35b4ba256e", ""], ["Завтрак из двух яиц", "500", "18014981/63361503530238521fea124430b04c8d", ""], ["Австралийский завтрак", "790", "16995589/3a76fa3a9afc4de6beb03e20fad262bc", ""]]], ["Завтраки солёные", [["Тост с авокадо и черри", "700", "17717759/d7f24f0de9754457accaca2d4abae739", ""], ["Тост с лососем", "850", "18014981/8d4537eeb3de46ee8fb96b25b6a0102b", ""], ["Оладьи из цукини с микс-салатом и крем-чизом", "600", "17717759/c8d820ed64ff48e38158cbe492b55c04", ""], ["Драники со сметаной", "600", "18014981/9c61f127fdb24bd7a494219efccea9d8", ""], ["Панкейки с беконом и муссом из пармезана", "650", "17793655/67c8f6b36054b8fabf8308f179b5b393", ""], ["Гречневая каша с яйцом пашот и муссом пармезан", "600", "18030408/38e9ef02d7214073b5065b0da88630eb", ""], ["Сырные вафли", "650", "18014981/c7966c7dc4b24547affe9c3e72702433", ""]]], ["Завтраки сладкие", [["Овсяная каша", "550", "17772865/69651e89d5fa4c67a68ba3ba559c319b", ""], ["Рисовая каша со сливочным маслом", "550", "20179955/48904711b51e40d59be8607f07e39597", "Рис, молоко, сливки, сливочное масло, соль, сахар"], ["Сырники с кремом маскарпоне и малиновым вареньем", "650", "17780111/f3f7e1a5eac3427485462bcf647d3ea0", ""], ["Творожная запеканка", "550", "", ""], ["Панкейки с нежным кремом и карамелью", "650", "16489290/0746050622383e0c1c45f81c40ee0eb1", ""]]], ["Паста", [["Паста с шампиньонами и трюфелем", "820", "18644967/17b914a7f6fa411c9a98723d6f46602d", ""], ["Сливочное ризотто с креветкой", "850", "", ""], ["Паста арабьятта", "680", "17772865/9a3bdcc41d454ba5a869fb1ab187b478", ""], ["Паста с лососем и черри", "850", "17778899/5a2691f0142843ab907a97c86902ce86", ""], ["Сливочная паста с креветкой", "850", "18014981/ae9ee99f24724d0cb336bff63d69c264", ""], ["Паста карбонара", "780", "17770654/f82856e98e0746419f9d46c59d4ef247", ""], ["Паста с курицей в соусе блю-чиз", "780", "17772865/5affca5974cc4bbaaffec244185c6bea", ""]]], ["Супы", [["Куриный бульон с яйцом", "500", "18014981/f699ef68c9eb93c2e552dfec51e20647", ""], ["Томатный суп с сыром рикотта", "550", "17780111/fc11f03b20394872bde256ab17b88e8c", ""], ["Тыквенный крем-суп с креветкой", "650", "17772865/78dc69d654f0417d8048a87fcaad5a05", ""]]], ["Боулы", [["Боул с рисом, курицей и соусом терияки", "750", "17770654/000994e1336a4952b0aa0570c1c277af", ""], ["Боул с лососем и авокадо", "850", "17717759/1450d36d3d7544a79436a4ca168729f0", ""]]], ["Салаты", [["Цезарь с курицей или креветками", "680", "17772865/65d3d09d1ba34f2f9a3f8c8500c22293", ""], ["Теплый салат с говядиной и вялеными томатами", "750", "18125102/d9fc4197a900468cb062ee71f43067cf", ""]]], ["Сэндвичи", [["Сэндвич с трюфельным майонезом и курицей", "650", "18030408/32ccd427b6214e1eb0aec5cf023ce716", ""], ["Сэндвич с ростбифом и горчичным соусом", "650", "17780910/d5d0737954b24775b55ecbc49f5682e0", ""]]], ["Дополнительно", [["Хлеб", "150", "16489290/f41c3839a1024c5a953b9678ea665d7a", ""], ["Курица", "200", "16454428/11ce9f2568eb45568d55347616fcbd30", ""], ["Крем-чиз", "180", "16995589/e5723ee392ff42fc9a8164b0e2bbc045", ""], ["Креветки", "350", "16700655/88d25ff9245e4a93a716442866a8641d", ""], ["Лосось слабого посола", "350", "16454428/e355051089f846498342c9ddae43c40c", ""], ["Бекон", "250", "16066946/de4ff02911c94295b6a6f9a0a2a9fd0e", ""], ["Гуакамоле", "280", "16700655/df815034b3574a358ec36e780cf2ef80", ""], ["Сезонные ягоды", "250", "16066946/e1c88f06d2c14dff81af2296d4436034", ""], ["Яйцо", "50", "18208126/75c57d02711a451bbe007090d46a32d3", ""]]]],REV=[["Елена С.", "19 октября", "Были несколько раз в этом кафе. Очень понравилось. Чистота, что очень важно. Приятная атмосфера, вежливый персонал. Очень вкусные еда и напитки! Перепробовали все меню. Даже трудно сказать, что вкуснее! Большое спасибо сотрудникам за такой сервис. Узнала от друзей, что ввели новое меню. Собираемся встретиться с подружками снова в этом же месте. ❤️ Могу посоветовать это место с чистой душой.."], ["Анастасия 💓", "5 октября", "По еде сказать ничего пока не могу, не пробовала. Однако, кофе был очень приятным. Отдельный респект за хорошее овсяное молоко, а не дешевое водянистое! Вежливый персонал, уютная атмосфера бонусом! 👍🏽"], ["Алина Пешехонова", "26 августа", "Это место - моя личная гастрономическая любовь! Хожу сюда целенаправленно ради двух блюд, которые здесь доведены до идеала.\n\nВо-первых, шакшука. Это тот самый случай, когда соус насыщенный, пряный, в меру острый, а желток растекается именно так, как нужно. Идеально макать туда свежий хлеб.\n\nВо-вторых, сырные вафли - это просто разрыв шаблона! Хрустящее тесто, тянущийся сыр, нежнейшее яйцо пашот, которое красиво вытекает при разрезе, пикантная руккола и этот волшебный соус пармезан... Сочетание настолько гармоничное, что хочется заказать вторую порцию сразу же.\n\nОбязательно вернусь снова. Повару - низкий поклон!"], ["Вячеслав Смирнов", "22 августа", "хорошие ребята\nцены правда как в кофемании, ну ничего страшного ❤️ главное качество на уровне"], ["Инна Д.", "21 августа", "Вкусные завтраки!!"], ["Катерина О.", "16 августа", "Супер быстрый и вкусный завтрак!\nЗабежала сегодня перед стрижкой, сразу спросила смогут ли быстро приготовить, т.к у меня было буквально 10-12 мин, и не прошло и 5 минут, у меня на столе уже был кофе и тост. Девушка бариста-умничка, первым делом отправила заказ на кухню и после взялась делать кофе. Мой тост («торт» с лососем, как в спешке я его назвала😅) был свежейший! Вкуснейший хлеб, теплый пашот, лосось идеальной прополки и кофе! Просто сделали мой день) Обязательно вернусь ещё, уже в спокойной обстановке насладиться едой на веранде"], ["Мария Портнягина", "11 августа", "Уютная кофейня с вкусной едой и приятным персоналом. Отличная тихая атмосфера."], ["Илона К.", "9 августа", "Отличное уютненькое место с интригующим баристой в солнцезащитных очках как у меня\nИ да, американо чуточку кислее чем я понимаю 💋"], ["Irina A.", "8 августа", "Без лишнего пафоса с по-настоящему вкусной едой 🌸\nНабрела на вас случайно, обязательно вернусь.\nСпасибо!\n\nPS яйца Бенедикт бесподобны! Жаль не имею привычки фоткать еду."], ["Милена Цыганкова | Б1", "5 августа", "Уютная атмосфера, отзывчивый и милый персонал, также можно спокойно поработать, если необходимо!\n\nВсем советую"]],PH=["6057477/2a000001805f36ab713eef3d25ca529adc2e", "3569559/2a000001805f366ef8d48797d70609c06ab8", "6314780/2a00000188f5304966b738406b246d0e2f1a", "6302373/2a000001805f36ee121c443f3287004ffdf4", "4612894/2a000001805f370be5e5c2844525463dacc2", "6333331/2a000001805f36ca8903a79bd93c1b854312", "1899063/2a0000017f401ce1a54d780a7c19db0edac3", "6302373/2a0000017f5a8315ecb05f094eb7ce9f7d6c", "5490109/2a0000017f741edc9d74034d436d6f64732d", "5483320/2a0000017f741e066156b8a9641028859755", "5307539/2a000001805f3780ccbe483728c89d616aa5", "6221595/2a000001805f37638b2f8370ffa4d97c93cc", "6315042/2a000001805f3745ecdafa0826b5a1680d20", "5493698/2a000001805f3723e70da87b3cb116404571", "5479189/2a0000017f6ff0d0280196f06b72ad92ef93", "5491685/2a0000017f503b3693327313918f5cc6185d", "6406681/2a0000017f5049a73278f0ed4443fc379a0b", "5493698/2a0000017f6f9767f875f27becb4b910ad70", "5459048/2a0000017f5a7eeef667d17e56dc83861dd5", "5487188/2a0000017f6f978b9579d8a99255f8b79c02", "5449087/2a0000017f6f9741b5b1f1b86c360b6fd970", "6406681/2a0000017f8741b8b4f9b36b20547adcccec", "6319069/2a0000017f401cdd7d6a3561338a7d00806d", "6221595/2a0000017f8741b44dd3bbfa855ad18c786a", "5493698/2a0000017f6f88e40632d4080ac50b6f8c76", "6237886/2a0000017f6f87ccf05fa8dd5ce5a81122c3", "6477742/2a0000017f6f877faf20cb66aff8fd95a97f", "6249106/2a0000018a23f52852d3b02ed145984e0380", "10869107/2a0000018a23f5279d5e33449148e1ddd2f9", "9237948/2a000001891849aa3d733410df53cb2e33fa", "1027861/2a00000184bf2eb4b075fd2273c0c3f48f86", "9719535/2a0000018aa986dd9b49dedc4b0617826943", "8133749/2a00000187ea97523abbee5f003e16fb80fa", "9428388/2a00000188443e1eacc452b4a0e1d89f501c", "5235091/2a00000181a8f0d0347e44bccfd68c012cc3", "7659180/2a00000183c1b155ee76476050f7ca22ddc0", "1886119/2a0000018572efa0f1f13dc7c110606ddf32", "6314780/2a0000018273e40e696f81676353ca35d8df", "6928818/2a000001845875702dbf1d78f92a148ee030", "5509094/2a000001803d3e6e2df766dc051c78b2452f", "927916/2a00000187b8457965c1a054e38ed2b8be72", "5257938/2a000001820d613c12beecaa82bca49787e3", "1027639/2a0000018861b86d90bf8ae51a48bbafb74e", "5649895/2a0000017fb7872aff30453714849f3de51d", "2436798/2a00000181fecc490cf563811235098a4731", "6477742/2a0000018273e40f57a94f61228c7c0fd750", "7021598/2a00000187cdb99fab38dd2d58db0627506f", "11421964/2a0000018c86f951964f85c186b83d5ceccc"];
+const E=p=>`https://avatars.mds.yandex.net/get-eda/${p}/1440x1082`,A=(p,s)=>`https://avatars.mds.yandex.net/get-altay/${p}/${s}`;
+// шапка
+const top_=document.getElementById('top'),fab=document.querySelector('.fab');addEventListener('scroll',()=>{top_.classList.toggle('solid',scrollY>innerHeight*.8);const s=scrollY>innerHeight*.9;fab.style.opacity=s?1:0;fab.style.pointerEvents=s?'auto':'none'},{passive:true});
+// расписание (как на странице кафе)
+const SCH={1:['07:59','21:00'],2:['07:59','21:00'],3:['07:59','21:00'],4:['07:59','21:00'],5:['07:59','21:00'],6:['08:59','21:00'],0:['08:59','21:00']};
+const DN=['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const now=new Date(Date.now()+(new Date().getTimezoneOffset()+180)*60000),wd=now.getDay(),mins=now.getHours()*60+now.getMinutes();
+const m=t=>{const[a,b]=t.split(':');return +a*60+ +b};const [o,c]=SCH[wd],open=mins>=m(o)&&mins<m(c);
+document.getElementById('stT').textContent=open?'Сейчас открыто':'Сейчас закрыто';
+document.getElementById('stS').textContent=`Сегодня ${o}–${c}`;
+document.getElementById('stI').textContent=open?'до '+c:'откроется в '+(mins<m(o)?o:SCH[(wd+1)%7][0]);
+if(!open)document.getElementById('st').classList.add('closed');
+document.getElementById('today').textContent=`${DN[wd]}, ${o}–${c}`;
+document.getElementById('sched').innerHTML=[1,2,3,4,5,6,0].map(d=>`<div class="${d===wd?'on':''}"><span>${DN[d]}${d===wd?' · сегодня':''}</span><span>${SCH[d][0]}–${SCH[d][1]}</span></div>`).join('');
+// меню
+const cats=document.getElementById('cats'),list=document.getElementById('list');let cur=0;
+cats.innerHTML=MENU.map((c,i)=>`<button data-i="${i}">${c[0]}<small>${c[1].length}</small></button>`).join('');
+cats.onclick=e=>{const b=e.target.closest('button');if(b){cur=+b.dataset.i;render();if(innerWidth<1000)document.getElementById('menu').scrollIntoView({behavior:'smooth'})}};
+function render(){[...cats.children].forEach((b,i)=>b.classList.toggle('on',i===cur));const [name,items]=MENU[cur];
+  if(name==='Дополнительно'){list.innerHTML=`<div style="grid-column:1/-1"><div class="addons">${items.map(i=>`<span>${i[0]}<b>${i[1]} ₽</b></span>`).join('')}</div></div>`;return}
+  list.innerHTML=items.map((i,k)=>`<div class="row ${i[2]?'':'noimg'}" data-k="${k}" style="animation-delay:${k*.04}s"><div class="im">${i[2]?`<img src="${E(i[2])}" alt="${i[0]}" loading="lazy">`:'без фото'}</div><div><h4>${i[0]}</h4>${i[3]?`<p>${i[3]}</p>`:''}</div><b>${i[1]} ₽</b></div>`).join('');
+  list.querySelectorAll('.row').forEach(r=>r.onclick=()=>openM(name,items[+r.dataset.k]))}
+render();
+const mod=document.getElementById('mod');
+function openM(c,i){document.getElementById('mIm').innerHTML=i[2]?`<img src="${E(i[2])}" alt="">`:'';document.getElementById('mCat').textContent=c;document.getElementById('mName').textContent=i[0];document.getElementById('mPr').textContent=i[1]+' ₽';document.getElementById('mDesc').textContent=i[3]||'';mod.classList.add('open')}
+mod.onclick=e=>{if(e.target===mod||e.target.closest('[data-x]'))mod.classList.remove('open')};
+// фото
+const strip=document.getElementById('strip'),more=document.getElementById('more');
+strip.innerHTML=[2,0,4,6,8].map(i=>`<button data-i="${i}"><img src="${A(PH[i],'XXL')}" alt="" loading="lazy"></button>`).join('');
+let shown=0;const pool=PH.map((p,i)=>i).filter(i=>![2,0,4,6,8].includes(i));
+function addMore(){const n=pool.slice(shown,shown+12);more.insertAdjacentHTML('beforeend',n.map(i=>`<button data-i="${i}"><img src="${A(PH[i],'L')}" alt="" loading="lazy"></button>`).join(''));shown+=n.length;document.getElementById('moreBtn').style.display=shown>=pool.length?'none':'';document.getElementById('phc').textContent=`${shown+5} из ${PH.length}`}
+addMore();document.getElementById('moreBtn').onclick=addMore;
+const lb=document.getElementById('lb');let li=0;function show(i){li=(i+PH.length)%PH.length;document.getElementById('lbImg').src=A(PH[li],'XXL');document.getElementById('lbC').textContent=`${li+1} / ${PH.length}`}
+[strip,more].forEach(g=>g.onclick=e=>{const b=e.target.closest('button');if(b){show(+b.dataset.i);lb.classList.add('open')}});
+lb.querySelector('.p').onclick=()=>show(li-1);lb.querySelector('.n').onclick=()=>show(li+1);lb.querySelector('.xx').onclick=()=>lb.classList.remove('open');
+lb.onclick=e=>{if(e.target===lb)lb.classList.remove('open')};
+addEventListener('keydown',e=>{if(e.key==='Escape'){lb.classList.remove('open');mod.classList.remove('open')}if(lb.classList.contains('open')){if(e.key==='ArrowRight')show(li+1);if(e.key==='ArrowLeft')show(li-1)}});
+// отзывы
+document.getElementById('revs').innerHTML=REV.map(r=>`<div class="rc rv"><div class="who"><b>${r[0]}</b><small>${r[1]}</small></div><div class="stars">★★★★★</div><p>${r[2]}</p></div>`).join('');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

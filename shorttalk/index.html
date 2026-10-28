@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Short Talk · демо-концепт</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#f6f1e9; --paper:#fffcf7; --milk:#ece3d6;
+  --navy:#22304a; --navy-2:#34466a; --sky:#a9c6d6; --sky-l:#dbe8ef;
+  --apricot:#e59a72; --ink:#1f2633; --ink-2:#5f6675; --line:rgba(31,38,51,.12);
+  --r:26px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{background:var(--cream);color:var(--ink);font-family:Manrope,system-ui,sans-serif;font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:Fraunces,Georgia,serif;font-weight:400;line-height:1.05;letter-spacing:-.01em}
+em{font-style:italic;color:var(--apricot)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.ph{background:var(--milk);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+
+/* водяные знаки */
+.wm{position:fixed;inset:-50%;z-index:9998;pointer-events:none;transform:rotate(-24deg);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='440' height='170'%3E%3Ctext x='0' y='95' font-family='Arial' font-size='22' font-weight='700' fill='%231f2633' fill-opacity='0.08'%3E%D0%94%D0%95%D0%9C%D0%9E%20%C2%B7%20%D0%9D%D0%95%20%D0%9E%D0%A4%D0%98%D0%A6%D0%98%D0%90%D0%9B%D0%AC%D0%9D%D0%AB%D0%99%20%D0%A1%D0%90%D0%99%D0%A2%3C/text%3E%3C/svg%3E");}
+.demo-bar{position:fixed;left:0;right:0;bottom:0;z-index:9999;background:var(--navy);color:var(--cream);font-size:13px;text-align:center;padding:8px 16px;letter-spacing:.04em}
+.demo-bar b{color:var(--apricot)}
+
+/* навигация */
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:60;width:calc(100% - 32px);max-width:1140px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 10px 10px 24px;border-radius:999px;
+  background:rgba(255,252,247,.78);backdrop-filter:blur(14px);border:1px solid var(--line);transition:.4s}
+nav.scrolled{box-shadow:0 12px 40px -22px rgba(31,38,51,.45)}
+.logo{font-family:Fraunces,serif;font-size:24px;white-space:nowrap}
+.logo i{color:var(--apricot)}
+nav ul{display:flex;gap:24px;list-style:none;font-size:15px;font-weight:500}
+nav ul a{position:relative}
+nav ul a::after{content:"";position:absolute;left:0;bottom:-3px;height:1.5px;width:0;background:var(--apricot);transition:.3s}
+nav ul a:hover::after{width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--navy);color:var(--paper);padding:13px 24px;border-radius:999px;font-weight:600;font-size:15px;border:0;cursor:pointer;transition:transform .3s,background .3s;white-space:nowrap;font-family:inherit}
+.btn:hover{transform:translateY(-2px);background:var(--apricot)}
+.btn.light{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.btn.light:hover{background:var(--sky-l)}
+
+/* hero */
+.hero{min-height:100vh;display:grid;grid-template-columns:1.05fr 1fr;align-items:center;gap:48px;padding-top:120px;padding-bottom:70px}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--navy-2);font-weight:700}
+.tag::before{content:"";width:22px;height:1.5px;background:var(--apricot)}
+.hero h1{font-size:clamp(52px,7.4vw,112px);margin:22px 0 24px}
+.hero h1 span{display:block;overflow:hidden;padding-bottom:.06em}
+.hero h1 span i{display:inline-block;font-style:normal;transform:translateY(110%);animation:rise 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+.hero h1 span:nth-child(2) i{animation-delay:.15s}
+@keyframes rise{to{transform:none}}
+.lead{font-size:20px;color:var(--ink-2);max-width:500px;margin-bottom:32px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hours{font-size:14px;color:var(--ink-2);margin-top:26px}
+.hours b{color:var(--ink)}
+
+.collage{position:relative;height:620px}
+.collage .ph{position:absolute;border-radius:var(--r);box-shadow:0 30px 60px -30px rgba(31,38,51,.55);opacity:0;animation:pop 1.1s cubic-bezier(.2,.8,.2,1) forwards}
+.c1{width:58%;height:70%;right:0;top:0;--r0:3deg;animation-delay:.2s!important}
+.c2{width:46%;height:48%;left:0;top:22%;--r0:-5deg;animation-delay:.4s!important}
+.c3{width:44%;height:40%;right:12%;bottom:0;--r0:-2deg;animation-delay:.6s!important}
+@keyframes pop{from{opacity:0;transform:translateY(40px) rotate(0) scale(.94)}to{opacity:1;transform:rotate(var(--r0))}}
+.collage .ph:hover img{transform:scale(1.06)}
+.chip{position:absolute;z-index:3;background:var(--paper);border:1px solid var(--line);padding:10px 16px;border-radius:999px;font-size:14px;font-weight:600;box-shadow:0 14px 30px -18px rgba(31,38,51,.5);animation:float 6s ease-in-out infinite;white-space:nowrap}
+.chip b{color:var(--apricot)}
+.k1{top:6%;left:6%}.k2{top:58%;right:-2%;animation-delay:-2s}.k3{bottom:6%;left:0;animation-delay:-4s}
+@keyframes float{50%{transform:translateY(-12px)}}
+
+/* бегущая строка */
+.marquee{background:var(--navy);color:var(--cream);padding:22px 0;overflow:hidden;transform:rotate(-1.5deg);margin:10px -20px}
+.marquee div{display:flex;gap:48px;width:max-content;animation:run 32s linear infinite;font-family:Fraunces,serif;font-size:30px;font-style:italic}
+.marquee span::after{content:"✦";margin-left:48px;color:var(--sky);font-style:normal;font-size:20px}
+@keyframes run{to{transform:translateX(-50%)}}
+
+section{padding:120px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:52px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(40px,5.4vw,72px);max-width:720px}
+.sec-head p{max-width:400px;color:var(--ink-2)}
+
+/* о нас */
+.about{display:grid;grid-template-columns:1fr 1.05fr;gap:64px;align-items:center}
+.about .ph{border-radius:var(--r);aspect-ratio:4/5}
+.about h2{font-size:clamp(38px,4.8vw,64px);margin:18px 0 26px}
+.about p{color:var(--ink-2);margin-bottom:18px}
+
+/* почему мы */
+.why{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
+.card:hover{transform:translateY(-8px);box-shadow:0 30px 50px -30px rgba(31,38,51,.45)}
+.card:hover img{transform:scale(1.07)}
+.card .ph{aspect-ratio:1/1}
+.card div.t{padding:24px 24px 28px}
+.card .num{font-family:Fraunces,serif;font-size:15px;color:var(--apricot);display:block;margin-bottom:10px}
+.card h3{font-size:26px;margin-bottom:10px}
+.card p{font-size:15px;color:var(--ink-2)}
+
+/* галерея */
+.gallery{overflow:hidden;padding:10px 0}
+.gallery .row{display:flex;gap:16px;width:max-content;animation:run 60s linear infinite}
+.gallery:hover .row{animation-play-state:paused}
+.gallery .ph{width:300px;height:380px;border-radius:22px;flex:none}
+.gallery .ph:nth-child(even){height:320px;margin-top:30px}
+
+/* меню */
+.menu-sec{background:var(--paper);border-radius:48px;margin:0 12px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;margin-bottom:36px;scrollbar-width:thin}
+.tabs button{flex:none;font:600 15px Manrope,sans-serif;padding:11px 20px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;transition:.3s}
+.tabs button.on{background:var(--navy);color:var(--paper);border-color:var(--navy)}
+.tabs button:not(.on):hover{background:var(--sky-l)}
+.cat-title{font-size:36px;margin-bottom:24px}
+.dishes{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.dish{cursor:pointer;opacity:0;transform:translateY(18px);animation:in .6s forwards}
+@keyframes in{to{opacity:1;transform:none}}
+.dish .ph{aspect-ratio:1/1;border-radius:22px;position:relative}
+.dish:hover img{transform:scale(1.07)}
+.mark{position:absolute;top:12px;left:12px;background:var(--apricot);color:#fff;font-size:12px;font-weight:700;padding:5px 11px;border-radius:999px;letter-spacing:.03em}
+.mark.hot{background:#d9534f}
+.dish h4{font-size:21px;margin:14px 0 4px}
+.dish .meta{display:flex;justify-content:space-between;gap:10px;font-size:14px;color:var(--ink-2)}
+.dish .meta b{color:var(--ink);font-size:15px;white-space:nowrap}
+.more{font-size:13px;color:var(--navy-2);font-weight:600;margin-top:4px;display:inline-block}
+
+/* модалка */
+.modal{position:fixed;inset:0;z-index:80;background:rgba(31,38,51,.55);backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;padding:20px}
+.modal.open{display:flex;animation:fade .3s}
+@keyframes fade{from{opacity:0}}
+.mbox{background:var(--paper);border-radius:28px;max-width:820px;width:100%;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;max-height:90vh;animation:up .45s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(30px);opacity:0}}
+.mbox .ph{min-height:320px;position:relative}.mbox .ph img{position:absolute;inset:0}
+.mbox .t{padding:34px 30px;overflow:auto}
+.mbox h3{font-size:34px;margin-bottom:8px}
+.mbox .price{font-family:Fraunces,serif;font-size:26px;color:var(--apricot);margin-bottom:16px}
+.mbox p{font-size:15px;color:var(--ink-2);margin-bottom:12px}
+.mbox .x{font-size:13px;background:var(--cream);border-radius:14px;padding:14px 16px}
+.close{position:absolute;top:24px;right:24px;width:46px;height:46px;border-radius:50%;border:0;background:var(--paper);font-size:22px;cursor:pointer}
+
+/* у нас можно */
+.can{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.can .item .ph{aspect-ratio:3/4;border-radius:var(--r);margin-bottom:18px}
+.can .item:hover img{transform:scale(1.06)}
+.can h3{font-size:24px;margin-bottom:8px}
+.can p{font-size:15px;color:var(--ink-2)}
+
+/* приходите */
+.come{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.come .ph{border-radius:var(--r);aspect-ratio:3/4}
+.come .ph:nth-child(2){margin-top:60px}
+.come-text{max-width:820px;margin:0 auto 60px;text-align:center}
+.come-text p{font-family:Fraunces,serif;font-size:clamp(22px,2.6vw,32px);line-height:1.35;margin-bottom:18px}
+.come-text p:last-child{margin-bottom:0}
+
+/* зёрна */
+.beans{background:var(--navy);color:var(--cream);border-radius:48px;margin:0 12px}
+.beans .sec-head p{color:rgba(246,241,233,.75)}
+.bean-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.bean{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:34px 32px;transition:background .4s}
+.bean:hover{background:rgba(255,255,255,.1)}
+.bean small{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sky);font-weight:700}
+.bean h3{font-size:34px;margin:10px 0 14px}
+.bean .pr{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.bean .pr span{background:var(--cream);color:var(--ink);border-radius:999px;padding:8px 16px;font-weight:600;font-size:15px}
+.bean p{color:rgba(246,241,233,.75);font-size:15px}
+.grind{display:grid;grid-template-columns:1.3fr 1fr;gap:20px}
+.grind .bean{padding:30px 32px}
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.pills span{border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:7px 15px;font-size:14px}
+
+/* бонусы */
+.bonus-top{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.big-card{border-radius:var(--r);padding:34px 32px;position:relative;overflow:hidden}
+.big-card.a{background:var(--sky)}
+.big-card.b{background:var(--apricot);color:#fff}
+.big-card .n{font-family:Fraunces,serif;font-size:clamp(60px,7vw,96px);line-height:1}
+.big-card h3{font-size:26px;margin:10px 0 8px}
+.big-card p{font-size:15px;opacity:.85}
+.levels{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:end;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:34px 28px 28px}
+.lv{text-align:center}
+.lv .bar{background:var(--sky-l);border-radius:16px 16px 6px 6px;height:0;transition:height 1.2s cubic-bezier(.2,.8,.2,1);display:flex;align-items:flex-start;justify-content:center;padding-top:12px;font-family:Fraunces,serif;font-size:26px;color:var(--navy)}
+.lv:last-child .bar{background:var(--navy);color:var(--cream)}
+.lv b{display:block;margin-top:12px;font-size:15px}
+.lv small{color:var(--ink-2);font-size:13px}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+.rules div{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:28px 30px}
+.rules h3{font-size:24px;margin-bottom:10px}
+.rules p,.rules li{font-size:15px;color:var(--ink-2)}
+.rules ul{padding-left:18px}
+
+/* бронь */
+.book{background:var(--apricot);color:#fff;border-radius:48px;padding:80px 60px;display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;position:relative;overflow:hidden}
+.book::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:rgba(255,255,255,.1);right:-120px;top:-160px}
+.book h2{font-size:clamp(40px,5vw,66px)}
+.book h2 em{color:var(--navy)}
+.book p{opacity:.95;margin-top:18px}
+.book p a{font-weight:700;border-bottom:1.5px solid}
+form{display:grid;gap:12px;position:relative}
+input{font:500 16px Manrope,sans-serif;padding:16px 20px;border-radius:16px;border:0;background:rgba(255,252,247,.96);color:var(--ink);width:100%}
+input:focus{outline:2px solid var(--navy)}
+.form-msg{min-height:22px;font-size:14px}
+
+/* контакты */
+.contacts{display:grid;grid-template-columns:1.2fr 1fr;gap:24px}
+.map{border-radius:var(--r);overflow:hidden;min-height:400px;background:var(--milk);position:relative;display:flex;align-items:flex-end}
+.map img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.map:hover img{transform:scale(1.05)}
+.map::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(34,48,74,.85),transparent 60%)}
+.map .wt{position:relative;z-index:2;padding:30px;color:#fff;display:grid;gap:8px;justify-items:start}
+.map .wt small{font-size:12px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.map .wt b{font-family:Fraunces,serif;font-weight:400;font-size:28px;line-height:1.15;margin-bottom:10px}
+.info{display:grid;gap:14px}
+.info div{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:24px 26px}
+.info small{display:block;text-transform:uppercase;letter-spacing:.14em;font-size:12px;color:var(--ink-2);font-weight:700;margin-bottom:6px}
+.info b{font-family:Fraunces,serif;font-weight:400;font-size:25px}
+
+footer{padding:60px 0 100px;text-align:center;color:var(--ink-2);font-size:14px}
+footer .logo{font-size:60px;color:var(--ink);display:block;margin-bottom:10px}
+
+/* появление при скролле */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1s,transform 1s cubic-bezier(.2,.8,.2,1)}
+.rv.show{opacity:1;transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
+
+@media (max-width:1000px){
+  nav ul{display:none}
+  .hero,.about,.book,.contacts,.bonus-top,.rules,.grind,.bean-grid{grid-template-columns:1fr}
+  .collage{height:480px}
+  .why,.can{grid-template-columns:1fr 1fr}
+  .dishes{grid-template-columns:repeat(3,1fr)}
+  .book{padding:50px 26px}
+  section{padding:80px 0}
+  .mbox{grid-template-columns:1fr}
+  .mbox .ph{min-height:220px;max-height:260px}
+}
+@media (max-width:620px){
+  .why,.can,.come{grid-template-columns:1fr}
+  .come .ph:nth-child(2){margin-top:0}
+  .dishes{grid-template-columns:1fr 1fr;gap:14px}
+  .dish h4{font-size:18px}
+  .dish .meta{flex-direction:column;gap:0}
+  .levels{grid-template-columns:repeat(5,1fr);gap:6px;padding:24px 12px}
+  .lv .bar{font-size:18px}
+  .lv b{font-size:12px}.lv small{font-size:11px}
+  .collage{height:400px}
+  .chip{font-size:12px}
+  .gallery .ph{width:220px;height:280px}
+  .gallery .ph:nth-child(even){height:240px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.dish,.collage .ph{opacity:1;transform:none}.hero h1 span i{transform:none}}
+</style>
+</head>
+<body>
+
+
+
+<nav id="nav">
+  <a href="#" class="logo">Short <i>Talk</i></a>
+  <ul>
+    <li><a href="#about">О проекте</a></li>
+    <li><a href="#menu">Меню</a></li>
+    <li><a href="#beans">Кофе в зёрнах</a></li>
+    <li><a href="#bonus">Бонусная карта</a></li>
+    <li><a href="#contacts">Контакты</a></li>
+  </ul>
+  <a href="#book" class="btn">Забронировать</a>
+</nav>
+
+<header class="wrap hero">
+  <div>
+    <span class="tag">Кафе у Патриарших прудов</span>
+    <h1><span><i>Когда проснулся,</i></span><span><i>тогда и <em>завтрак</em></i></span></h1>
+    <p class="lead">Short Talk: стильная кофейня на Патриарших с завтраками весь день, спешелти кофе и десертами.</p>
+    <div class="hero-actions">
+      <a href="#book" class="btn">Забронировать столик →</a>
+      <a href="#menu" class="btn light">Смотреть меню</a>
+    </div>
+    <p class="hours">Время работы <b>09:00 – 22:00</b> · Садовая-Кудринская ул., 32, стр. 2</p>
+  </div>
+  <div class="collage">
+    <div class="ph c1"><img src="https://thb.tildacdn.com/tild3865-6233-4263-a466-613261336565/-/resize/900x/DSC_1525.jpeg" alt="Short Talk" loading="lazy"></div>
+    <div class="ph c2"><img src="https://thb.tildacdn.com/tild6666-3839-4461-a462-666665336635/-/resize/700x/DSC_1600.jpeg" alt="Short Talk" loading="lazy"></div>
+    <div class="ph c3"><img src="https://thb.tildacdn.com/tild6432-6665-4461-b964-383533386633/-/resize/700x/DSC_3767.jpeg" alt="Short Talk" loading="lazy"></div>
+    <div class="chip k1">Сырники «Дали» · <b>650 ₽</b></div>
+    <div class="chip k2">Раф с халвой · <b>450 ₽</b></div>
+    <div class="chip k3">🐾 Можно с питомцем</div>
+  </div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div>
+  <span>Когда проснулся, тогда и завтрак</span><span>Готовим сами</span><span>Спешалти зерно</span><span>Можно с четырёхлапыми друзьями</span><span>Авторские блюда и напитки</span>
+  <span>Когда проснулся, тогда и завтрак</span><span>Готовим сами</span><span>Спешалти зерно</span><span>Можно с четырёхлапыми друзьями</span><span>Авторские блюда и напитки</span>
+</div></div>
+
+<section id="about" class="wrap about">
+  <div class="ph rv"><img src="https://thb.tildacdn.com/tild3665-3535-4133-a331-363636376664/-/resize/900x/DSC_1577.jpeg" alt="Short Talk" loading="lazy"></div>
+  <div>
+    <span class="tag rv">О проекте</span>
+    <h2 class="rv d1">Short Talk <em>кафе</em></h2>
+    <p class="rv d2">Современное кафе недалеко от Патриарших прудов и дома Булгакова.</p>
+    <p class="rv d2">Концепция Short Talk кафе строится вокруг разговора: приятной беседы с чашечкой ароматного кофе и вкусными блюдами, которые обязательно станут вашими спутниками в нашем уютном пространстве.</p>
+    <p class="rv d3">Светлое пространство с мягкими пастельными тонами, приятный свет и удобная посадка с различными вариациями мебели: кофейные столики для пар, мягкие диваны и кресла, большие столы для компаний, которые помогут вам расслабиться и посвятить немного времени беседам и вкусной кухне.</p>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top:0">
+  <div class="sec-head">
+    <h2 class="rv">Почему <em>мы?</em></h2>
+  </div>
+  <div class="why">
+    <div class="card rv"><div class="ph"><img src="https://thb.tildacdn.com/tild3637-3130-4432-b064-626232303434/-/resize/600x/___21.jpg" alt="Short Talk" loading="lazy"></div><div class="t"><span class="num">01</span><h3>Готовим сами</h3><p>Мы ежедневно готовим блюда на собственной кухне из свежих продуктов. Следим за качеством, вкусом и подачей, чтобы каждый гость получил по-настоящему домашний и вкусный завтрак, обед или перекус.</p></div></div>
+    <div class="card rv d1"><div class="ph"><img src="https://thb.tildacdn.com/tild3633-3230-4637-b632-316362666137/-/resize/600x/__2026-06-24__143500.png" alt="Short Talk" loading="lazy"></div><div class="t"><span class="num">02</span><h3>Завтраки целый день</h3><p>Наша концепция строится вокруг завтраков целый день, поэтому не нужно торопиться к утреннему меню. Наш лозунг «когда проснулся, тогда и завтрак».</p></div></div>
+    <div class="card rv d2"><div class="ph"><img src="https://thb.tildacdn.com/tild3730-6131-4465-b538-633933623639/-/resize/600x/DSC_2075.jpg" alt="Short Talk" loading="lazy"></div><div class="t"><span class="num">03</span><h3>Авторские блюда и напитки</h3><p>Мы создаём меню с вниманием к деталям: сочетаем знакомые вкусы с интересными идеями, сезонными продуктами и красивой подачей. У нас можно попробовать не только классику, но и фирменные позиции нашего кафе.</p></div></div>
+    <div class="card rv d3"><div class="ph"><img src="https://thb.tildacdn.com/tild3031-3639-4236-a539-303933373565/-/resize/600x/__2026-06-24__143837.png" alt="Short Talk" loading="lazy"></div><div class="t"><span class="num">04</span><h3>Спешалти зерно</h3><p>Мы используем качественное спешалти-зерно и внимательно настраиваем приготовление кофе. Благодаря этому напитки получаются насыщенными, ароматными и стабильными по вкусу, от эспрессо до молочных кофейных напитков.</p></div></div>
+  </div>
+</section>
+
+<div class="gallery" aria-hidden="true"><div class="row"><div class="ph"><img src="https://thb.tildacdn.com/tild3661-6238-4131-b539-393462346363/-/resize/500x/DSC_1433.jpeg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3564-3065-4463-b834-643431336161/-/resize/500x/DSC_1607.jpeg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild6332-6661-4833-b630-626636303331/-/resize/500x/DSC_1650.jpeg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3766-3634-4733-b839-613065356238/-/resize/500x/2.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild6666-6366-4933-b361-366136353165/-/resize/500x/3.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3637-3130-4432-b064-626232303434/-/resize/500x/___21.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3730-6131-4465-b538-633933623639/-/resize/500x/DSC_2075.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3762-3263-4334-b065-323564303337/-/resize/500x/DSC_1906.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3633-3230-4637-b632-316362666137/-/resize/500x/__2026-06-24__143500.png" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3031-3639-4236-a539-303933373565/-/resize/500x/__2026-06-24__143837.png" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3661-6238-4131-b539-393462346363/-/resize/500x/DSC_1433.jpeg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3564-3065-4463-b834-643431336161/-/resize/500x/DSC_1607.jpeg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild6332-6661-4833-b630-626636303331/-/resize/500x/DSC_1650.jpeg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3766-3634-4733-b839-613065356238/-/resize/500x/2.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild6666-6366-4933-b361-366136353165/-/resize/500x/3.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3637-3130-4432-b064-626232303434/-/resize/500x/___21.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3730-6131-4465-b538-633933623639/-/resize/500x/DSC_2075.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3762-3263-4334-b065-323564303337/-/resize/500x/DSC_1906.jpg" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3633-3230-4637-b632-316362666137/-/resize/500x/__2026-06-24__143500.png" alt="" loading="lazy"></div><div class="ph"><img src="https://thb.tildacdn.com/tild3031-3639-4236-a539-303933373565/-/resize/500x/__2026-06-24__143837.png" alt="" loading="lazy"></div></div></div>
+
+<section id="menu" class="menu-sec" style="margin-top:100px">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="rv">Меню</h2>
+      <p class="rv d1">Нажмите на позицию, чтобы увидеть описание, состав и КБЖУ.</p>
+    </div>
+    <div class="tabs" id="tabs"></div>
+    <h3 class="cat-title" id="catTitle"></h3>
+    <div class="dishes" id="dishes"></div>
+  </div>
+</section>
+
+<section id="can" class="wrap">
+  <div class="sec-head">
+    <h2 class="rv">У <em>нас</em></h2>
+  </div>
+  <div class="can">
+    <div class="item rv"><div class="ph"><img src="https://thb.tildacdn.com/tild6665-3764-4366-b463-636137346165/-/resize/600x/__2026-06-24__144604.png" alt="Short Talk" loading="lazy"></div><h3>Можно с четырёхлапыми друзьями</h3><p>Приходите к нам вместе с питомцами. У нас можно позавтракать, выпить кофе и провести время с любимым четвероногим другом.</p></div>
+    <div class="item rv d1"><div class="ph"><img src="https://thb.tildacdn.com/tild3531-6533-4262-a532-383539636430/-/resize/600x/__2026-06-24__151435.png" alt="Short Talk" loading="lazy"></div><h3>Можно с ноутбуком</h3><p>У нас удобно работать, учиться или проводить онлайн-встречи за чашкой кофе. Спокойная атмосфера, комфортные места и вкусные завтраки помогают настроиться на продуктивный день.</p></div>
+    <div class="item rv d2"><div class="ph"><img src="https://thb.tildacdn.com/tild3964-6164-4433-a263-343763386461/-/resize/600x/__2026-06-24__152029.png" alt="Short Talk" loading="lazy"></div><h3>Пространство для встреч и общения</h3><p>Наше кафе создано для тёплых встреч, неспешных разговоров и приятного времени с близкими. Здесь можно встретиться с друзьями, обсудить дела, отметить маленький повод или просто насладиться атмосферой.</p></div>
+    <div class="item rv d3"><div class="ph"><img src="https://thb.tildacdn.com/tild6566-3237-4533-b339-393765353965/-/resize/600x/photo_2026-06-24_154.jpeg" alt="Short Talk" loading="lazy"></div><h3>Есть веранда летом</h3><p>В тёплый сезон у нас работает веранда, отличное место для завтраков на свежем воздухе, кофе с друзьями и спокойных вечеров.</p></div>
+  </div>
+</section>
+
+<section class="wrap" style="padding-top:40px">
+  <div class="come-text">
+    <p class="rv">Приходите к нам на завтрак и попробуйте сырники из фермерского творога, бриошь со скрэмблом, разнообразные каши или панкейки.</p>
+    <p class="rv d1">Приходите на обед: мы рекомендуем попробовать разные вариации пасты или лапшу удон, а также особый бургер от шефа.</p>
+    <p class="rv d2">Приходите поболтать, насладитесь временем друг с другом и не забудьте о вкусном <em>десерте и кофе</em> от Short Talk!</p>
+  </div>
+  <div class="come">
+    <div class="ph rv"><img src="https://thb.tildacdn.com/tild6130-3131-4232-a431-363666666564/-/resize/700x/DSC_7537.jpg" alt="Short Talk" loading="lazy"></div>
+    <div class="ph rv d1"><img src="https://thb.tildacdn.com/tild3762-3263-4334-b065-323564303337/-/resize/700x/DSC_1906.jpg" alt="Short Talk" loading="lazy"></div>
+    <div class="ph rv d2"><img src="https://thb.tildacdn.com/tild3939-3133-4338-a561-366239653239/-/resize/700x/DSC_7486.jpg" alt="Short Talk" loading="lazy"></div>
+  </div>
+</section>
+
+<section id="beans" class="beans">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="rv">Кофе в зерне <em>с собой</em></h2>
+      <p class="rv d1">У нас вы можете купить свежий кофе в зерне прямо в кофейне. Просто обратитесь к сотруднику, и он поможет вам с выбором и оформлением покупки.</p>
+    </div>
+    <div class="bean-grid">
+      <div class="bean rv"><small>Наш основной сорт</small><h3>Бразилия Экспокассер</h3><div class="pr"><span>250 г · 700 ₽</span><span>1 кг · 2500 ₽</span></div><p>Бренд 9BAR. Отличный вариант как для дома, так и для подарка.</p></div>
+      <div class="bean rv d1"><small>Авторский кофе с ярким характером</small><h3>«Сварщица Екатерина»</h3><div class="pr"><span>250 г · 1200 ₽</span><span>barrels &amp; flowers · 1400 ₽</span></div><p>Продаётся только в фасовке 250 г. «barrels &amp; flowers»: экспериментальная линейка. Сорта уточняйте у сотрудника.</p></div>
+    </div>
+    <div class="grind">
+      <div class="bean rv"><small>Помол</small><h3>Смелем под ваш способ</h3><div class="pills"><span>турка</span><span>френч-пресс</span><span>чашка</span><span>воронка</span><span>эспрессо</span><span>и другие</span></div><p>Если вы не уверены, какой помол выбрать, то наш сотрудник обязательно вам подскажет.</p></div>
+      <div class="bean rv d1"><small>Предзаказ</small><h3>Другие позиции 9BAR</h3><p>Также можно оформить предзаказ на другие позиции кофе бренда 9BAR. Сроки поставки уточняйте у сотрудника в кофейне.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="bonus" class="wrap">
+  <div class="sec-head">
+    <h2 class="rv">Бонусная программа <em>short talk</em></h2>
+    <p class="rv d1">Накапливайте баллы за каждый заказ. Кэшбэк от 1% до 10% в зависимости от категории участника. 1 балл = 1 рубль.</p>
+  </div>
+  <div class="bonus-top">
+    <div class="big-card a rv"><div class="n">200</div><h3>приветственных баллов</h3><p>Начисляются при регистрации карты.</p></div>
+    <div class="big-card b rv d1"><div class="n">7-й</div><h3>напиток в подарок</h3><p>Каждый 7-й напиток в чеке бесплатно. Участвуют все напитки из меню, кроме категории «Сладкие чаи».</p></div>
+  </div>
+  <div class="levels rv" id="levels">
+    <div class="lv"><div class="bar" data-h="22">1%</div><b>Новичок</b><small>до 1 000 ₽</small></div>
+    <div class="lv"><div class="bar" data-h="40">3%</div><b>Любитель</b><small>1 000 – 4 999 ₽</small></div>
+    <div class="lv"><div class="bar" data-h="58">5%</div><b>Ценитель</b><small>5 000 – 6 999 ₽</small></div>
+    <div class="lv"><div class="bar" data-h="76">7%</div><b>Вип</b><small>7 000 – 9 999 ₽</small></div>
+    <div class="lv"><div class="bar" data-h="96">10%</div><b>Легенда short talk</b><small>от 10 000 ₽</small></div>
+  </div>
+  <div class="rules">
+    <div class="rv"><h3>Как это работает</h3><ul><li>Баллы начисляются на все позиции заказа. В момент списания баллов кэшбэк не начисляется.</li><li>Баллами можно оплатить до 50% стоимости заказа на всю еду, за исключением напитков (напитки участвуют в другой акции).</li><li>Категория обновляется автоматически при закрытии заказа, исходя из суммы заказов за последние 30 дней.</li></ul></div>
+    <div class="rv d1"><h3>Понижение категории</h3><p>Ежемесячно проверяется активность. Без заказов 30 дней категория снижается на 1 уровень, 60 дней на 2, 90 дней на 3, 120 дней на 4.</p><a class="btn" style="margin-top:18px" href="https://m1.iiko.cards/ru-RU/L/068558?b=2QZTGD74EV" target="_blank" rel="noopener">Зарегистрировать карту →</a></div>
+  </div>
+</section>
+
+<section id="book" class="wrap" style="padding-top:40px">
+  <div class="book">
+    <div>
+      <h2 class="rv">Забронировать <em>столик</em></h2>
+      <p class="rv d1">Оставьте заявку или позвоните нам: <a href="tel:+79152471055">+7 (915) 247-10-55</a></p>
+    </div>
+    <form class="rv d2" onsubmit="return demoSend(event)">
+      <input placeholder="Ваше имя" aria-label="Имя">
+      <input placeholder="Телефон" aria-label="Телефон" type="tel">
+      <button class="btn" type="submit" style="padding:17px">Забронировать</button>
+      <div class="form-msg" id="msg"></div>
+    </form>
+  </div>
+</section>
+
+<section id="contacts" class="wrap">
+  <div class="sec-head"><h2 class="rv">Контакты</h2></div>
+  <div class="contacts">
+    <a class="map where rv" href="https://yandex.ru/maps/-/CCUCUJFokA" target="_blank" rel="noopener"><img src="https://thb.tildacdn.com/tild3865-6233-4263-a466-613261336565/-/resize/900x/DSC_1525.jpeg" alt="Short Talk" loading="lazy"><div class="wt"><small>Мы здесь</small><b>Садовая-Кудринская ул., 32, стр. 2</b><span class="btn">Открыть в Яндекс Картах ↗</span></div></a>
+    <div class="info">
+      <div class="rv"><small>Адрес</small><b>Садовая-Кудринская ул., 32, стр. 2</b><br><a class="more" href="https://yandex.ru/maps/-/CCUCUJFokA" target="_blank" rel="noopener">Открыть в Яндекс Картах →</a></div>
+      <div class="rv d1"><small>Время работы</small><b>09:00 – 22:00</b></div>
+      <div class="rv d2"><small>Телефон</small><b><a href="tel:+79152471055">+7 (915) 247-10-55</a></b></div>
+    </div>
+  </div>
+</section>
+
+<section id="demoEnd" style="padding:70px 16px 60px;text-align:center;color:inherit;border-top:1px solid currentColor;border-color:rgba(127,127,127,.3);margin:0;overflow:hidden"><div style="font-size:clamp(40px,12.4vw,200px);font-weight:800;line-height:.9;letter-spacing:-.03em;opacity:.92;white-space:nowrap">ДЕМОВЕРСИЯ</div><p style="margin:18px auto 0;max-width:640px;font-size:15px;opacity:.65;line-height:1.5">Это концепт нового сайта, не официальный сайт Short Talk. Тексты, меню и фото взяты с их открытых страниц и показаны для ознакомления.</p></section>
+<footer>
+  <span class="logo">Short <em>Talk</em></span>
+  Демо-концепт редизайна. Не является официальным сайтом кафе. Фото и тексты: short-talk.ru
+</footer>
+
+<div class="modal" id="modal" onclick="if(event.target===this)closeM()">
+  <button class="close" onclick="closeM()" aria-label="Закрыть">✕</button>
+  <div class="mbox"><div class="ph" id="mImg"></div><div class="t"><h3 id="mName"></h3><div class="price" id="mPrice"></div><p id="mSize"></p><p id="mDesc"></p><div class="x" id="mX"></div></div></div>
+</div>
+
+<script>
+const MENU=[{"t": "Сезонное", "h": "Сезонное предложение", "items": [{"n": "Мокко брауни", "s": "", "p": "490", "m": "", "i": "tild3463-3236-4134-b632-656139373134/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Латте персиковый пай", "s": "", "p": "490", "m": "Новинка", "i": "tild3036-3538-4231-a330-353132333933/LHapm30I9vCpHigxym-2.jpg", "d": "", "x": ""}, {"n": "Айс бельгийское печенье", "s": "", "p": "490", "m": "Новинка", "i": "tild6132-3738-4136-a338-336533353932/oOHSMIVeLWCDaJTq6LeA.jpg", "d": "", "x": ""}, {"n": "Айс карамельный латте", "s": "", "p": "490", "m": "Новинка", "i": "tild3336-3337-4265-b066-393931663965/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Матча малина на фисташковом молоке", "s": "", "p": "490", "m": "Новинка", "i": "tild3338-6161-4466-a535-626463323530/dZOkUV7k3agJq5I25bgE.jpg", "d": "", "x": ""}]}, {"t": "Кофе", "h": "Кофе", "items": [{"n": "Американо", "s": "250/350/450 мл", "p": "270/290/320", "m": "", "i": "tild3531-3330-4365-b364-643230346539/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Фильтр кофе", "s": "350/450 мл", "p": "290/320", "m": "", "i": "tild6136-3364-4864-b639-633366356135/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Капучино", "s": "250/350/450 мл", "p": "340/370/390", "m": "", "i": "tild3234-3061-4434-a163-343763663261/__2026-05-19__114633.png", "d": "", "x": ""}, {"n": "Латте", "s": "350/450 мл", "p": "370/390", "m": "", "i": "tild3565-6434-4037-b732-356461393037/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Флэт уайт", "s": "250 мл", "p": "350", "m": "", "i": "tild6633-3434-4139-b438-616332613636/__2026-05-19__114412.png", "d": "", "x": ""}, {"n": "Раф", "s": "350/450 мл", "p": "420/450", "m": "", "i": "tild3865-3439-4931-b337-323732633864/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Мокко", "s": "350/450 мл", "p": "390/410", "m": "", "i": "tild3264-3434-4335-b330-656366636436/__2026-05-19__115202.png", "d": "", "x": ""}, {"n": "Эспрессо", "s": "", "p": "160", "m": "", "i": "tild3339-3635-4437-a436-663237393336/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Бамбл кофе", "s": "350 мл", "p": "450", "m": "", "i": "tild6465-6130-4464-a536-356637383233/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Грейпфрут бамбл кофе", "s": "350 мл", "p": "450", "m": "Новинка", "i": "tild3263-3734-4539-b837-303136386239/-123.jpg", "d": "", "x": ""}, {"n": "Эспрессо тоник", "s": "350 мл", "p": "350", "m": "", "i": "tild3636-3339-4033-a265-336335386435/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Гранатовый эспрессо тоник", "s": "350 мл", "p": "350", "m": "Новинка", "i": "tild3037-3163-4034-a535-623162633363/2nCIYr04pc4bMf0Kz9jC.jpg", "d": "", "x": ""}]}, {"t": "Раф", "h": "Раф кофе", "items": [{"n": "Раф шоколадное печенье", "s": "450 мл", "p": "450", "m": "", "i": "tild6265-3133-4131-b238-353062633362/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Раф ореховый тоффи", "s": "450 мл", "p": "450", "m": "Новинка", "i": "tild3736-6430-4333-b830-323931663138/sA1dfFQoqXe1HZOLwwlI.jpg", "d": "", "x": ""}, {"n": "Раф с халвой", "s": "450 мл", "p": "450", "m": "", "i": "tild6433-6438-4664-b834-333235373761/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Апельсиновый раф", "s": "450 мл", "p": "450", "m": "", "i": "tild3864-6337-4461-b634-373631613437/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Малиновый раф", "s": "450 мл", "p": "450", "m": "", "i": "tild3635-6464-4661-a439-326462336139/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Раф попкорн", "s": "450 мл", "p": "450", "m": "", "i": "tild6530-3765-4631-b439-656361613164/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}]}, {"t": "Горячие напитки", "h": "Горячие напитки", "items": [{"n": "Какао с маршмеллоу", "s": "350/450 мл", "p": "380/410", "m": "", "i": "tild3765-6565-4164-a235-653135323932/__2026-05-19__115427.png", "d": "", "x": ""}, {"n": "Горячий шоколад", "s": "350/450 мл", "p": "380/410", "m": "", "i": "tild3437-3334-4839-b539-393834346634/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Матча латте (зелёная/синяя)", "s": "350/450 мл", "p": "380/410", "m": "", "i": "tild3961-3739-4166-b732-623831393365/__2026-05-19__114840.png", "d": "", "x": ""}, {"n": "Шиповник мёд/лимон", "s": "350/450 мл", "p": "360/390", "m": "", "i": "tild6664-3538-4730-b062-643036356466/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}]}, {"t": "Лимонады", "h": "Лимонады", "items": [{"n": "Классический лимонад", "s": "450 мл", "p": "420", "m": "", "i": "tild6434-3139-4637-b064-363131666364/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Клубничный мохито", "s": "450 мл", "p": "420", "m": "", "i": "tild3635-3265-4166-b462-373635633431/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Манго-маракуйя", "s": "450 мл", "p": "420", "m": "", "i": "tild3839-6436-4365-b239-336266393464/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Маракуйя мохито", "s": "450 мл", "p": "420", "m": "Новинка", "i": "tild3433-6335-4361-b737-346135616163/-158.jpg", "d": "", "x": ""}, {"n": "Барби лимонад", "s": "450 мл", "p": "420", "m": "", "i": "tild3735-3961-4732-b039-636532376235/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Киви яблоко жасмин", "s": "450 мл", "p": "420", "m": "Новинка", "i": "tild6365-3265-4439-a437-653434623861/-152.jpg", "d": "", "x": ""}, {"n": "Каламанси мандарин", "s": "450 мл", "p": "420", "m": "Новинка", "i": "tild3265-6635-4166-b963-326634613131/_OVhkPfW5vCXN9AHgV_p.jpg", "d": "", "x": ""}]}, {"t": "Фреши", "h": "Фреши", "items": [{"n": "Апельсиновый фреш", "s": "350 мл", "p": "450", "m": "", "i": "tild6536-3164-4661-b166-643566666333/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Грейпфрутовый фреш", "s": "350 мл", "p": "450", "m": "", "i": "tild3439-3264-4638-b366-663364376431/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}]}, {"t": "Чай", "h": "Чай в чайнике", "items": [{"n": "Ассам", "s": "500 мл", "p": "390", "m": "", "i": "tild3235-3862-4363-a232-386166343439/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Чёрный с бергамотом", "s": "500 мл", "p": "390", "m": "", "i": "tild3235-3862-4363-a232-386166343439/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Зелёный с жасмином", "s": "500 мл", "p": "390", "m": "", "i": "tild6134-6566-4736-b937-613532346532/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Молочный улун", "s": "500 мл", "p": "390", "m": "", "i": "tild6134-6566-4736-b937-613532346532/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Наглый фрукт", "s": "500 мл", "p": "390", "m": "", "i": "tild6162-3164-4965-b938-343362623438/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Малина с мятой", "s": "500 мл", "p": "390", "m": "", "i": "tild3261-3465-4935-b865-653035336534/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Гречишный чай", "s": "500 мл", "p": "390", "m": "", "i": "tild3235-3862-4363-a232-386166343439/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Таёжный", "s": "500 мл", "p": "390", "m": "", "i": "tild3235-3862-4363-a232-386166343439/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Иван-чай", "s": "500 мл", "p": "390", "m": "", "i": "tild6134-6566-4736-b937-613532346532/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Чёрный с чабрецом", "s": "500 мл", "p": "390", "m": "", "i": "tild3235-3862-4363-a232-386166343439/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}]}, {"t": "Пунши и ягодные чаи", "h": "Пунши и ягодные чаи", "items": [{"n": "Сибирский пунш", "s": "450 мл", "p": "450", "m": "", "i": "tild6134-3839-4762-a539-373132326562/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Пунш манго-жасмин", "s": "450 мл", "p": "450", "m": "Новинка", "i": "tild3735-3134-4164-a233-356637396562/6XIz0Z0H4W2CVHnEnGI_.jpg", "d": "", "x": ""}, {"n": "Малиновый чай с мятой", "s": "0,6/1 л", "p": "530/690", "m": "", "i": "tild3365-6133-4730-b831-326238386163/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Облепиха с мёдом и имбирём", "s": "0,6/1 л", "p": "530/690", "m": "", "i": "tild3463-6239-4062-a638-383964383162/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}, {"n": "Чёрная смородина с мятой", "s": "0,6/1 л", "p": "530/690", "m": "", "i": "tild3632-6465-4662-a139-653534626663/WhatsApp_Image_2025-.jpeg", "d": "", "x": ""}]}, {"t": "Завтраки", "h": "Завтраки (целый день)", "items": [{"n": "Драник с лососем", "s": "210 г", "p": "880", "m": "", "i": "tild3236-3262-4863-b238-316561396539/7.jpeg", "d": "Картофельная лепёшка с идеальной начинкой, к завтраку. А завтракать можно целый день!)", "x": "На 100 г: 231,4 ккал · Б 11,2 · Ж 15,2 · У 12,3. Аллергены: яйцо, рыба, молоко, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Сырники «Дали»", "s": "220 г", "p": "650", "m": "", "i": "tild6330-6163-4338-b736-653131353433/_.jpg", "d": "Сырники, сезонные фрукты, мусс манго/маракуйя, йогурт, семена чиа.", "x": "На 100 г: 228,7 ккал · Б 11,7 · Ж 11,5 · У 19,5. Аллергены: молоко, яйцо, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Панкейки бенедикт", "s": "270 г", "p": "790", "m": "", "i": "tild3664-6664-4639-b066-343161656664/__1.jpg", "d": "Один запах перенесёт вас в мир, по ту сторону экрана). Бессмертная классика: ветчина / бекон / яйцо пашот / голландский соус и всё приправлено семенами чиа.", "x": "Состав: панкейки, ветчина индейки, бекон с/к, яйцо (пашот), голландский соус, микс салат, семена чиа. На 100 г: 320,7 ккал · Б 10,5 · Ж 17,9 · У 29,3. Аллергены: яйцо, глютен, молоко. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Шакшука", "s": "290 г", "p": "740", "m": "Острое", "i": "tild3335-6634-4539-b731-393064333861/__2026-05-16__102348.png", "d": "Идеальное сочетание терпких томатов, яиц пашот и зелени, в подаче вместе с тостами из лукового хлеба. Всегда то, что нужно!", "x": "Состав: лук репчатый, лук красный, перец болгарский, халапеньо, чеснок, соус томатный, яйца (пашот), лук зелёный, кинза, тартин, зира, лук жареный, орегано. На 100 г: 174,1 ккал · Б 6,7 · Ж 9,2 · У 16. Аллергены: яйцо, глютен, молоко. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Финский завтрак", "s": "390 г", "p": "820", "m": "", "i": "tild3634-6134-4638-b138-663332373962/2.jpeg", "d": "Овсяная каша на молоке с брусничным соусом и кусочками яблока в корице. Подаётся с тостом из крем-чиза и с/с лососем.", "x": "На 100 г: 155,9 ккал · Б 6,4 · Ж 5,7 · У 19,4. Аллергены: рыба, глютен, молоко. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Английский завтрак", "s": "300 г", "p": "840", "m": "", "i": "tild6330-3262-4239-b235-363238633364/DSC_8870.jpeg", "d": "Всё, что нужно для начала дня! Или шведский стол на вашей тарелке.", "x": "Состав: коул слоу овощи, бекон с/к, яйцо (глазунья), сосиска куриная, хлеб тостовый, микс салата, соус гриль. На 100 г: 267,3 ккал · Б 8,3 · Ж 22,6 · У 7,5. Аллергены: яйцо, молоко, горчица, глютен, соя. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Баварский завтрак", "s": "370 г", "p": "890", "m": "Новинка", "i": "tild3336-3631-4661-b964-393932623765/__2026-04-23__064837.png", "d": "Глазунья с колбасками из говядины, картофель мини, огурцы солёные, соус релиш, томаты жареные, луковый тартин, микс салата.", "x": "На 100 г: 230,6 ккал · Б 20 · Ж 9,9 · У 15,3. Аллергены: яйцо, глютен, горчица. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Миланский завтрак", "s": "400 г", "p": "920", "m": "Новинка", "i": "tild6437-6364-4636-b534-623733306163/__2026-04-23__070057.png", "d": "Омлет, бриошь, мортаделла, моцарелла, томаты, руккола, оливки, огурцы свежие.", "x": "На 100 г: 209,4 ккал · Б 10,3 · Ж 12,4 · У 13,9. Аллергены: яйцо, глютен, молоко, кунжут, орехи. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Голландский завтрак", "s": "300 г", "p": "920", "m": "", "i": "tild3763-3534-4430-b162-633534346537/6.png", "d": "Голландский блин, яйцо пашот, огурец, черри, икра палтуса, лук зелёный, голландский соус, лосось с/с или копчёный тунец на выбор.", "x": "На 100 г: 217,6 ккал · Б 10,5 · Ж 14,8 · У 10,4. Аллергены: яйцо, глютен, молоко, рыба. Для точного состава обратитесь пожалуйста к сотруднику."}]}, {"t": "Супы", "h": "Супы", "items": [{"n": "Тыквенный с беконом", "s": "", "p": "670", "m": "", "i": "tild3561-6337-4866-b536-663961393761/WhatsApp_Image_2025-.jpeg", "d": "Подаётся с гренками и красным маслом.", "x": "На 100 г: 325,7 ккал · Б 7,6 · Ж 29,4 · У 7,5. Аллергены: молоко, кунжут, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Тыквенный с креветками", "s": "320 г", "p": "790", "m": "", "i": "tild6364-3264-4666-b030-323932336636/3.jpg", "d": "Подаётся с гренками и красным маслом.", "x": "На 100 г: 211,3 ккал · Б 12,4 · Ж 13,9 · У 8,9. Аллергены: молоко, ракообразные, кунжут, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Куриная лапша", "s": "320 г", "p": "510", "m": "", "i": "tild3637-3964-4134-b430-346631663963/_.jpeg", "d": "Куриное мясо, куриный бульон, морковь, лук репчатый, вермишель, яйцо.", "x": "На 100 г: 172,5 ккал · Б 11,8 · Ж 8,7 · У 11,6. Аллергены: яйцо, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}]}, {"t": "Посытнее", "h": "Посытнее", "items": [{"n": "Панкейки в азиатском стиле", "s": "230 г", "p": "890", "m": "", "i": "tild3238-6632-4664-a562-653966303030/__2025-11-19__115718.png", "d": "Крем-чиз, лосось с/с, огурец свежий, соус вок, кунжут.", "x": "На 100 г: 261,4 ккал · Б 10,5 · Ж 11,4 · У 29,1. Аллергены: рыба, кунжут, яйцо, глютен, молоко, соя, моллюски. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Мерри Джейн", "s": "260 г", "p": "890", "m": "", "i": "tild3839-3439-4636-b835-313962303666/5.png", "d": "Американский бургер с котлетой XL, сырной шапкой и соусом гриль.", "x": "На 100 г: 280,5 ккал · Б 11,9 · Ж 20,7 · У 11,5. Аллергены: глютен, молоко, яйцо, соя, моллюски, рыба, горчица. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Хрустящая курочка", "s": "330 г", "p": "790", "m": "", "i": "tild6162-3064-4536-b430-346162666633/3.png", "d": "С пармезаном и сырным соусом.", "x": "На 100 г: 161,5 ккал · Б 18,2 · Ж 5,6 · У 9,4. Аллергены: яйцо, глютен, молоко. Для точного состава обратитесь пожалуйста к сотруднику."}]}, {"t": "Салаты", "h": "Салаты", "items": [{"n": "Салат Цезарь", "s": "220 г", "p": "650", "m": "", "i": "tild6230-3338-4438-a439-336232643233/DSC_8974.jpeg", "d": "Всегда прекрасен! Не знаешь, что заказать? Закажи его!", "x": "Состав: айсберг, романо, соус Цезарь, черри, гренки из тартина, пармезан, куриная грудка су-вид. На 100 г: 218 ккал · Б 13,9 · Ж 15,7 · У 5,1. Аллергены: молоко, горчица, соя, рыба, яйцо, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Салат с хрустящими баклажанами", "s": "210 г", "p": "650", "m": "", "i": "tild3664-6430-4631-b062-303439373535/DSC_2802.jpg", "d": "Микс салата, баклажаны, помидоры, сливочный сыр, тайский соус, кинза, свежая мята.", "x": "На 100 г: 149 ккал · Б 2,6 · Ж 5,9 · У 8,1. Аллергены: кунжут, молоко, соя, моллюски, рыба, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Салат с лососем", "s": "160 г", "p": "790", "m": "Новинка", "i": "tild3239-3965-4333-a662-383265343366/-14.jpg", "d": "Лосось с/с, микс салата, ореховый соус, ореховая крошка, огурец, перечное масло, крем-чиз, соус вок.", "x": "На 100 г: 249,7 ккал · Б 8,4 · Ж 20,3 · У 8,0. Аллергены: рыба, арахис, орехи, кунжут, соя, моллюски, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Салат с ростбифом", "s": "160 г", "p": "820", "m": "Новинка", "i": "tild3831-6264-4130-b034-623030666438/-91.jpg", "d": "Микс салата, ростбиф, томаты вяленые, соус ореховый, жареный лук, апельсин, брусничный соус.", "x": "На 100 г: 247,9 ккал · Б 9,9 · Ж 17,6 · У 12,3. Аллергены: орехи, кунжут, молоко, горчица, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}]}, {"t": "Горячее", "h": "Горячее и стейки", "items": [{"n": "Бефстроганов", "s": "330 г", "p": "1200", "m": "Новинка", "i": "tild3135-3134-4663-b036-326661316133/__2026-04-23__070416.png", "d": "Говядина, болгарский перец, кабачок, лук, картофельное пюре, жареные шампиньоны, сливки, огурцы солёные, лук зелёный, микрозелень.", "x": "На 100 г: 173 ккал · Б 8,7 · Ж 11,3 · У 9,0. Аллергены: молоко. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Мясник у моря", "s": "380 г", "p": "1400", "m": "Новинка", "i": "tild3963-6666-4563-a531-373631353737/__2026-04-23__064735.png", "d": "Стейк из говядины, мясо мидий, вонголе, креветки, кальмар, рис, соус карри на кокосовом молоке, кунжут, лайм, кинза.", "x": "На 100 г: 167,3 ккал · Б 8,7 · Ж 11,3 · У 9,0. Аллергены: рыба, моллюски, ракообразные, кунжут. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Стейк из лосося", "s": "230 г", "p": "1400", "m": "Новинка", "i": "tild6162-3938-4263-a338-303738353836/7.png", "d": "", "x": "На 100 г: 345,6 ккал · Б 34,3 · Ж 21,1 · У 4,4. Аллергены: рыба, молоко. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Куриная грудка су-вид", "s": "300 г", "p": "790", "m": "", "i": "tild3535-3837-4534-b436-653264313033/DSC_6413.jpeg", "d": "Тому, кто по-настоящему голоден. Сочетание понятной еды с изысканным вкусом!", "x": "Состав: куриная грудка су-вид, картофельное пюре, соус сливочно-грибной, микрозелень, жареный лук. На 100 г: 166,2 ккал · Б 11,4 · Ж 8,8 · У 10,1. Аллергены: молоко. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Большой бифштекс с рисом", "s": "400 г", "p": "990", "m": "", "i": "tild3631-3430-4538-b264-393035396565/__.jpg", "d": "Рис, бифштекс (увеличенная порция), яйцо пашот, черри, бекон.", "x": "На 100 г: 219,2 ккал · Б 9,5 · Ж 16,5 · У 8. Аллергены: яйцо, молоко. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Средиземноморская паста", "s": "270 г", "p": "890", "m": "Новинка", "i": "tild3136-6438-4235-b562-383030653633/4.png", "d": "С кальмарами, креветками, мидиями в томатном соусе и стружкой тунца.", "x": "На 100 г: 136,8 ккал · Б 8,4 · Ж 3,3 · У 18,2. Аллергены: глютен, моллюски, ракообразные, рыба. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Лапша в стиле вок", "s": "270 г", "p": "750", "m": "", "i": "tild3437-6162-4237-a633-303037653863/13.jpeg", "d": "", "x": "Состав: удон, морковь, перец болгарский, кабачок, халапеньо, куриная грудка су-вид, соус вок, лук зелёный, кунжут. На 100 г: 165,6 ккал · Б 7,4 · Ж 5,9 · У 20,5. Аллергены: глютен, соя, кунжут, моллюски, молоко, рыба. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Рис с креветками и беконом", "s": "270 г", "p": "870", "m": "", "i": "tild3734-3734-4235-a163-663865353630/____.jpg", "d": "Рис, креветки, ореховый соус, бекон, грибы, семена чиа.", "x": "На 100 г: 283,4 ккал · Б 7,2 · Ж 20,7 · У 16,8. Аллергены: ракообразные, молоко, кунжут, орехи, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Паста карбонара", "s": "270 г", "p": "790", "m": "", "i": "tild6466-3730-4234-a263-386165323863/DSC_6426.jpeg", "d": "Паста со сливочным соусом и беконом. Всегда уверены в своём выборе!", "x": "Состав: спагетти, бекон с/к, сливки 22%, пармезан, микрозелень, яйцо, чеснок. На 100 г: 244,9 ккал · Б 7,9 · Ж 14,9 · У 19,5. Аллергены: яйцо, молоко, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Фетучини", "s": "270 г", "p": "790", "m": "", "i": "tild3163-6233-4732-b530-633965386331/DSC_6451.jpeg", "d": "Со сливочным соусом и пармезаном, (хочется повторить, но…) дома получается не так!", "x": "Состав: паста фетучини, куриная грудка су-вид, шампиньоны, сливки 22%, соус сливочно-грибной, пармезан, микрозелень. На 100 г: 221,2 ккал · Б 11,2 · Ж 11,4 · У 18,3. Аллергены: глютен, молоко. Для точного состава обратитесь пожалуйста к сотруднику."}]}, {"t": "Сладкое", "h": "Сладкое", "items": [{"n": "Вафля с жареным бананом", "s": "200 г", "p": "670", "m": "Новинка", "i": "tild3131-6132-4365-b165-653333363430/WhatsApp_Image_2025-.jpeg", "d": "Классическая вафля, банан, карамель, мороженое.", "x": "На 100 г: 261,7 ккал · Б 4,8 · Ж 11,7 · У 34,2. Аллергены: молоко, арахис, орехи, яйцо, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Панкейки шоколадные", "s": "200 г", "p": "670", "m": "", "i": "tild3465-6630-4333-a433-366235326530/12.jpeg", "d": "Пышные панкейки с добавлением банана, щедро политые шоколадным кремом и посыпанные ореховой крошкой. Для любителей «послаще»)", "x": "Состав: панкейки, банан, ореховая крошка, кленовый сироп, шоколадный соус. На 100 г: 271,4 ккал · Б 7,1 · Ж 8,8 · У 40,7. Аллергены: арахис, орехи, яйцо, глютен, молоко. Для точного состава обратитесь пожалуйста к сотруднику."}, {"n": "Панкейки с сезонными фруктами", "s": "210 г", "p": "670", "m": "", "i": "tild3337-3430-4464-b764-353735366166/11.jpeg", "d": "Идеальные панкейки с манговым муссом, украшенные свежими ягодами (клубника и голубика) и завершающей ноткой из брусничного соуса.", "x": "Состав: панкейки, крем манго, клубника, голубика, соус брусничный, кленовый сироп. На 100 г: 253,5 ккал · Б 7 · Ж 7,3 · У 39,8. Аллергены: молоко, яйцо, глютен. Для точного состава обратитесь пожалуйста к сотруднику."}]}];
+const src=(p,w)=>{const i=p.indexOf('/');return `https://thb.tildacdn.com/${p.slice(0,i)}/-/resize/${w}x/${p.slice(i+1)}`};
+const tabs=document.getElementById('tabs'),dishes=document.getElementById('dishes'),catTitle=document.getElementById('catTitle');
+let cur=0;
+function show(k){
+  cur=k;[...tabs.children].forEach((b,i)=>b.classList.toggle('on',i===k));
+  const g=MENU[k];catTitle.textContent=g.h;
+  dishes.innerHTML=g.items.map((d,i)=>`<div class="dish" style="animation-delay:${Math.min(i,12)*.05}s" onclick="openM(${k},${i})">
+    <div class="ph"><img loading="lazy" src="${src(d.i,500)}" alt="${d.n}">${d.m?`<span class="mark ${d.m==='Острое'?'hot':''}">${d.m}</span>`:''}</div>
+    <h4>${d.n}</h4><div class="meta"><span>${d.s||''}</span><b>${d.p} ₽</b></div>${(d.d||d.x)?'<span class="more">Подробнее →</span>':''}</div>`).join('');
+}
+MENU.forEach((g,i)=>{const b=document.createElement('button');b.type='button';b.textContent=g.t;b.onclick=()=>show(i);tabs.appendChild(b)});
+show(0);
+const modal=document.getElementById('modal');
+function openM(k,i){const d=MENU[k].items[i];
+  document.getElementById('mImg').innerHTML=`<img src="${src(d.i,900)}" alt="${d.n}">`;
+  document.getElementById('mName').textContent=d.n;
+  document.getElementById('mPrice').textContent=d.p+' ₽';
+  document.getElementById('mSize').textContent=d.s?(/мл|л$/.test(d.s)?'Объём: ':'Вес: ')+d.s:'';
+  document.getElementById('mDesc').textContent=d.d;
+  const x=document.getElementById('mX');x.textContent=d.x;x.style.display=d.x?'block':'none';
+  modal.classList.add('open');document.body.style.overflow='hidden'}
+function closeM(){modal.classList.remove('open');document.body.style.overflow=''}
+addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');
+  if(e.target.id==='levels')e.target.querySelectorAll('.bar').forEach(b=>b.style.height=(b.dataset.h*2.2)+'px');
+  io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>30));
+function demoSend(e){e.preventDefault();document.getElementById('msg').textContent='Это демо: заявка никуда не отправляется 🙂';return false}
+</script>
+</body>
+</html>
