@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Магазин · Малиновка</title>
+<meta name="description" content="Малиновка: онлайн-игра про Россию. Голосовой чат, фракции, работы и уникальные автомобили.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f0f11">
+<link rel="icon" href="https://malinovka.org/img/logo/default.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Unbounded:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="shop">
+<main>
+<section class="ptitle">
+  <div class="bgimg" style="background-image:url('https://malinovka.org/img/shop/background.jpg')"></div>
+  <div class="wrap"><span class="kicker">Магазин</span><h1 style="margin-top:18px">Магазин<br><span class="red">Малиновки</span></h1><p>Статус M+, случайные наборы, игровые наборы, малина и автомобильные номера.</p></div>
+</section>
+<div class="shop-tabs"><div class="wrap"><a href="#plus" class="on">Статус M+</a><a href="#luck">Испытай удачу</a><a href="#packs">Игровые наборы</a><a href="#extra">Дополнительные услуги</a></div></div>
+<section class="sec" id="plus" style="padding-top:60px">
+  <div class="wrap">
+    <div class="plusban">
+      <div class="plus-hero rv"><div><h2>Получи максимум</h2><p>Благодаря Малиновка Плюс</p></div><a class="btn btn-white" href="plus.html">Узнать подробнее</a></div>
+      <div class="perks-scroll rv"><div class="track" id="perkTrack"></div></div>
+    </div>
+  </div>
+</section>
+<section class="sec" id="luck" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="post rv"><i>01</i>Случайные наборы</div><h2 class="rv">Испытай удачу</h2></div><p class="rv">Случайные наборы с уникальным транспортом и одеждой</p></div>
+    <div class="randoms" id="randoms"></div>
+  </div>
+</section>
+<section class="sec" id="packs" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="post rv"><i>02</i>Эксклюзив</div><h2 class="rv">Игровые наборы</h2></div><p class="rv">Эксклюзивные предложения, доступные только здесь</p></div>
+    <div class="sets-bar" id="setf"><button class="chip on" data-f="all">Все · 15</button><button class="chip" data-f="a">До 3 000 ₽</button><button class="chip" data-f="b">3 000 до 7 000 ₽</button><button class="chip" data-f="c">От 7 000 ₽</button></div>
+    <div class="sets" id="sets"></div>
+    <p class="note rv">Указанные даты удаления или обновления предложений могут меняться. Малину и любые внутриигровые предметы, приобретенные в магазине на сайте, можно активировать на любом персонаже. Кроме автомобильных номеров, которые можно активировать только на том сервере, для которого они были приобретены. Любой транспорт, приобретенный в этом магазине, является транспортом премиум типа и может использоваться без необходимости покупать жилье.</p>
+  </div>
+</section>
+<section class="sec" id="extra" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="post rv"><i>03</i>Покупка малины или автомобильного номера</div><h2 class="rv">Дополнительные услуги</h2></div></div>
+    <div class="extra">
+      <div class="malina rv">
+        <h3>Пополнение виртуального счета</h3>
+        <p>Выберите количество малины</p>
+        <div class="mal-grid" id="malGrid"></div>
+        <div class="mal-foot"><small>Малина используется для приобретения различных услуг, например игровой валюты (/donate)</small><button class="btn btn-red" id="malBuy">Купить за&nbsp;<span id="malPrice"></span>&nbsp;₽</button></div>
+      </div>
+      <div class="number rv">
+        <div><h3>Приобретение автомобильного номера</h3><p style="margin-top:8px">Номер можно активировать только на том сервере, для которого он был приобретен.</p></div>
+        <div class="plate"><span class="m">М<small>777</small>АЛ</span><span class="rg">77<i>RUS</i></span></div>
+        <button class="btn btn-red" id="numBuy">Купить от 199 ₽</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
